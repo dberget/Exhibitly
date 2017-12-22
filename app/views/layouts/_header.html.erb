@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light">
+    <% if logged_in?  %>
+      <a class="navbar-brand p-2">
+        <%= current_user.account.name %> 
+      </a>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item pr-1">
+      <%= @user.email %>
+      </li>
+      <li class="nav-item pr-1">
+        <%= link_to "log out", logout_path %>
+      </li>
+   </ul>
+    <% else %>
+      <div class="navbar-brand mr-auto p-2">
+        Sample App
+      </div>
+      <ul class="navbar-nav ml-auto">
+      <li class="nav-item pr-1">
+        <%= link_to "Sign Up", register_path %> or
+      </li>
+      <li class="nav-item pr-1">
+        <%= link_to "Log In", login_path %>
+      </li>
+      </ul>
+    <% end %>
+</nav>
