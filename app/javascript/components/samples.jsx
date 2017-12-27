@@ -1,12 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import SampleCard from './SampleCard'
+import FilterNav from './FilterNav'
 
 class Samples extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { filter: "Toro" }
+    this.state = {}
 
 
     this.handleClick = this.handleClick.bind(this)
@@ -22,14 +24,15 @@ class Samples extends React.Component {
 
 
   list() {
-    let list = this.props.samples.filter(sample => sample.title == this.state.filter)
+    let list = []
+
+    this.state.filter
+      ? list = this.props.samples.filter(sample => sample.title == this.state.filter)
+      : list = this.props.samples
 
     return (
       list.map((sample) =>
-        <ul>
-          <li> {sample.title} </li>
-          <li> {sample.body} </li>
-        </ul>
+        <SampleCard {...sample} key={sample.id} />
       )
     )
   }
@@ -38,10 +41,11 @@ class Samples extends React.Component {
     const { samples } = this.props
 
     return (
-      <div>
-        <button className="btn btn-primary mr-1" onClick={this.handleClick.bind(this, "Hormel")}> Hormel </button>
-        <button className="btn btn-primary" onClick={this.handleClick.bind(this, "Toro")}> Toro </button>
-        {this.list()}
+      <div className="container-fluid bg-light">
+        <FilterNav handleClick={this.handleClick} />
+        <div className="container-fluid pb-5">
+          {this.list()}
+        </div>
       </div >
     );
   }

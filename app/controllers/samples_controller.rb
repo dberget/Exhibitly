@@ -1,5 +1,6 @@
 class SamplesController < ApplicationController
   before_action :set_sample, only: [:show, :edit, :update, :destroy] 
+  # before_action :format_tags, only: [:create, :update]
   before_action :require_user
 
   # GET /samples
@@ -69,6 +70,10 @@ class SamplesController < ApplicationController
       @sample = Sample.find(params[:id])
     end
 
+    # def format_tags 
+    #   sample_params[:tags].split(', ')
+    # end
+
     # def set_user
     #   @user = current_user
     # end
@@ -80,6 +85,6 @@ class SamplesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sample_params
-      params.require(:sample).permit(:title, :body, :url, :tags, :account_id)
+      params.require(:sample).permit(:title, :body, :url, :account_id, :tags => [])
     end
 end

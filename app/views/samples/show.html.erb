@@ -21,6 +21,7 @@
 </p>
 
 <%= link_to 'Edit', edit_sample_path(@sample) %> |
+<%= link_to 'Delete', sample_path(@sample), method: :delete, data: { confirm: "Are you sure?" } %> |
 
 <%= link_to 'Back', samples_path %>
 
