@@ -7,6 +7,7 @@ class SamplesController < ApplicationController
   # GET /samples.json
   def index
     @samples = Sample.where(account_id: current_user.account_id) 
+    @account_tags = Sample.account_tags(current_user.account_id)
   end
 
   # GET /samples/1

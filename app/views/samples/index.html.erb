@@ -2,8 +2,7 @@
 
 <h3>Samples</h3>
 <%= link_to 'New Sample', new_sample_path %>
-
-<%= react_component("samples", { samples: @samples }) %> 
+<%= react_component("samples", { samples: @samples, account_tags: @account_tags }) %> 
 
 <br>
 

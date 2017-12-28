@@ -8,41 +8,58 @@ class Samples extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {}
-
+    this.state = { entries: [], filters: [] }
 
     this.handleClick = this.handleClick.bind(this)
-    this.list = this.list.bind(this)
+  }
+
+  componentWillMount() {
+    this.setState({ entries: this.props.samples })
   }
 
 
   handleClick(newFilter) {
+    const { filters } = this.state
+    let newFilters
+    const index = filters.map(x => x).indexOf(newFilter)
+
+    if (index === -1) {
+      newFilters = filters.concat(newFilter)
+    } else {
+      filters.splice(index, 1)
+      newFilters = filters
+    }
+
     this.setState({
-      filter: newFilter
+      filters: newFilters
     })
   }
 
 
-  list() {
-    let list = []
+  list = () => {
+    const { filters } = this.state
 
-    this.state.filter
-      ? list = this.props.samples.filter(sample => sample.title == this.state.filter)
-      : list = this.props.samples
+    let filteredSamples =
+      filters.length
+        ? this.state.entries.filter((sample) => {
+          return sample.tags.some(s => this.state.filters.indexOf(s) > -1)
+        })
+        : this.props.samples
+
 
     return (
-      list.map((sample) =>
+      filteredSamples.map((sample) =>
         <SampleCard {...sample} key={sample.id} />
       )
     )
   }
 
   render() {
-    const { samples } = this.props
+    const { samples, account_tags } = this.props
 
     return (
-      <div className="container-fluid bg-light">
-        <FilterNav handleClick={this.handleClick} />
+      <div className="container-fluid bg-light" >
+        <FilterNav handleClick={this.handleClick} filters={this.state.filters} samples={samples} account_tags={account_tags} />
         <div className="container-fluid pb-5">
           {this.list()}
         </div>
