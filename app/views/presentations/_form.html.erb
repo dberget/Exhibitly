@@ -1,0 +1,31 @@
+<%= form_with(model: presentation, local: true) do |form| %>
+  <% if presentation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(presentation.errors.count, "error") %> prohibited this presentation from being saved:</h2>
+
+      <ul>
+      <% presentation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <%= form.fields_for :presentation_samples_attributes do |u| %>
+    <div class="form-group">
+      <%= u.label :samples, class: "form-label" %>
+      <%= u.select :sample_id, @account_samples.map {|sample| [sample.title, sample.id]}, { :prompt => "Please select"}, { :multiple => true, :size => 4, class: "form-control" } %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+  <%= form.hidden_field :account_id, value: current_user.account_id %>
+<% end %>

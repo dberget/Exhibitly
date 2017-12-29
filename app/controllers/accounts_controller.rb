@@ -1,5 +1,6 @@
 class AccountsController < ApplicationController
         before_action :set_account, only: [:show, :edit, :update, :destroy] 
+        before_action :require_user, only: [:edit]
       
         # GET /accounts/1
         # GET /accounts/1.json
@@ -44,13 +45,20 @@ class AccountsController < ApplicationController
         # PATCH/PUT /accounts/1.json
         def update
           respond_to do |format|
-            if @account.update(account_params)
-              format.html { redirect_to root_url, notice: 'account was successfully updated.' }
-              format.json { render :show, status: :ok, location: register_path }
-            else
-              format.html { render :edit }
-              format.json { render json: @account.errors, status: :unprocessable_entity }
-            end
+            if @account.save
+              user = @account.users.build(account_params[:users_attributes])
+              if user.save
+               session[:user_id] = user.id
+               format.html { redirect_to samples_path, notice: 'account was successfully created.' }
+               format.json { render samples_path, status: :created, location: @account }
+              else
+               format.html { redirect_to register_path, notice: 'Error, in user save'  }
+               format.json { render json: @account.errors, status: :unprocessable_entity }
+              end
+           else
+             format.html { render :new, notice: 'Error, in account save' }
+             format.json { render json: @account.errors, status: :unprocessable_entity }
+           end
           end
         end
       
@@ -67,6 +75,11 @@ class AccountsController < ApplicationController
         private
           def set_account
             @account = Account.find(params[:id])
+          end
+
+          def require_user
+            redirect_to root_url unless current_user
+            @user = current_user
           end
       
           def account_params

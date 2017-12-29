@@ -1,6 +1,5 @@
 class SamplesController < ApplicationController
   before_action :set_sample, only: [:show, :edit, :update, :destroy] 
-  # before_action :format_tags, only: [:create, :update]
   before_action :require_user
 
   # GET /samples
@@ -18,7 +17,6 @@ class SamplesController < ApplicationController
   # GET /samples/new
   def new
     @sample = Sample.new
-    @user = current_user
   end
 
   # GET /samples/1/edit
@@ -70,10 +68,6 @@ class SamplesController < ApplicationController
     def set_sample
       @sample = Sample.find(params[:id])
     end
-
-    # def format_tags 
-    #   sample_params[:tags].split(', ')
-    # end
 
     # def set_user
     #   @user = current_user

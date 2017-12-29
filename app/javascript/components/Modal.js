@@ -9,7 +9,7 @@ const Modal = ({ handleClose, src }) => {
                     <button className="btn btn-primary" onClick={handleClose}> Close </button>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 

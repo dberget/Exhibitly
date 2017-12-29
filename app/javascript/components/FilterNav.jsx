@@ -4,19 +4,22 @@ import PropTypes from 'prop-types';
 class FilterNav extends Component {
     render() {
         return (
-            <div className="navbar navbar-light navbar-expand-lg pt-3">
+            <ul className="nav nav-pills navbar-light navbar-expand-lg pt-3 pb-1 border border-top-0 border-right-0 border-left-0">
                 {this.props.account_tags.map((tag) =>
-                    <button type="button" className={`nav-item btn btn-outline-primary mr-1 ${this.props.filters.includes(tag) ? "active" : ""}`} onClick={this.props.handleClick.bind(this, tag)}> {tag} </button>
+                    <li className="nav-item mr-1">
+                        <a className={`nav-link ${this.props.filters.includes(tag) ? "active" : ""}`} onClick={this.props.handleClick.bind(this, tag)}> {tag} </a>
+                    </li>
                 )}
+                <li className="mr-auto"></li>
                 {this.props.samples.map((sample) =>
-                    <button type="button" className="nav-item btn btn-outline-primary mr-1" onClick={this.props.handleClick.bind(this, sample.title)}> {sample.title} </button>
+                    <li className="nav-item">
+                        <a className="nav-link" onClick={this.props.handleClick.bind(this, sample.title)}> {sample.title} </a>
+                    </li>
                 )}
-                <button type="button" className="nav-item btn btn-primary mr-1" onClick={this.props.handleClick.bind(this, "")}> All </button>
-                <form class="form-inline ml-auto my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
+                <li>
+                    <a className="nav-link" onClick={this.props.handleClick.bind(this, "")}> All </a>
+                </li>
+            </ul>
         );
     }
 }

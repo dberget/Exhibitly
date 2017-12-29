@@ -5,6 +5,8 @@ class CreateSamples < ActiveRecord::Migration[5.2]
       t.string :body
       t.string :url
       t.text :tags
+      t.references :account
+      t.references :presentations
 
       t.timestamps
     end

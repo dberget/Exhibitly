@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @presentation.name %>
+<p>
+
+<%= react_component("samples", { samples: @presentation.samples, account_tags: @account_tags }) %> 
+
+
+<%= link_to 'Edit', edit_presentation_path(@presentation) %> |
+<%= link_to 'Back', presentations_path %>
