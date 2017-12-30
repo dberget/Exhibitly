@@ -67,7 +67,6 @@ class PresentationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_presentation
       @presentation = Presentation.find(params[:id])
     end
@@ -83,7 +82,6 @@ class PresentationsController < ApplicationController
       @account_samples = current_user.account.samples
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def presentation_params
       params.require(:presentation).permit(:name, :account_id, :presentation_samples_attributes => {:sample_id => []})
     end

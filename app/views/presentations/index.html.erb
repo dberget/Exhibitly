@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th colspan="1"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -16,6 +16,7 @@
         <td><%= presentation.name %></td>
         <td><%= link_to 'Show', presentation %></td>
         <td><%= link_to 'Edit', edit_presentation_path(presentation) %></td>
+        <td><%= link_to 'Share', "/share/#{presentation.id}" %></td>
         <td><%= link_to 'Destroy', presentation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
