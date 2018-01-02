@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { DropTarget } from 'react-dnd'
+import { findDOMNode } from 'react-dom'
 import update from 'immutability-helper'
 import ItemTypes from './ItemTypes'
 import Card from './Card'
@@ -21,12 +22,17 @@ const listTarget = {
     }
 }
 
-@DropTarget(ItemTypes.CARD, listTarget, (connect, monitor) => ({
+@DropTarget(ItemTypes.NEW, listTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
 }))
 export default class PresentationSamplesContainer extends Component {
     render() {
-        const { presentationSamples, handleRemove, listTarget, connectDropTarget } = this.props
+        const {
+            presentationSamples,
+            handleRemove,
+            listTarget,
+            connectDropTarget,
+            moveCard } = this.props
 
         return (
             connectDropTarget(
@@ -36,8 +42,10 @@ export default class PresentationSamplesContainer extends Component {
                         <Card
                             key={card.id}
                             index={i}
+                            type={ItemTypes.SORT}
                             id={card.id}
                             title={card.title}
+                            moveCard={moveCard}
                             handleRemove={handleRemove}
                         />
                     ))}

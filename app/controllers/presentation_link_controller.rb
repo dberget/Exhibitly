@@ -1,5 +1,4 @@
 class PresentationLinkController < ApplicationController
-
     def new
     end
 
@@ -36,8 +35,4 @@ class PresentationLinkController < ApplicationController
     def presentation_link_params
       params.permit(:presentation_id)
     end
-
-    def set_presentation_link
-      @presentation_link ||= Presentation.find(params[:id]) if params[:share_id].nil?
-    end 
 end

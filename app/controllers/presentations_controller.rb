@@ -30,7 +30,7 @@ class PresentationsController < ApplicationController
     samples = presentation_params[:presentation_samples_attributes][:sample_id]
 
     respond_to do |format|
-      if @presentation.save && save_samples(samples) 
+      if @presentation.save && update_samples(samples) 
         format.html { redirect_to @presentation, notice: 'Presentation was successfully created.' }
         format.json { render :show, status: :created, location: @presentation }
       else
@@ -46,7 +46,7 @@ class PresentationsController < ApplicationController
     respond_to do |format|
     samples = presentation_params[:presentation_samples_attributes][:sample_id]
 
-      if @presentation.save && save_samples(samples) 
+      if @presentation.save && update_samples(samples) 
         format.html { redirect_to @presentation, notice: 'Presentation was successfully updated.' }
         format.json { render :show, status: :ok, location: @presentation }
       else
@@ -71,7 +71,7 @@ class PresentationsController < ApplicationController
       @presentation = Presentation.find(params[:id])
     end
 
-    def save_samples(samples)
+    def update_samples(samples)
       curr_list = @presentation.presentation_samples.map {|s| s.sample_id.to_i}
       sample_list = samples.map {|s| s.to_i}
 
