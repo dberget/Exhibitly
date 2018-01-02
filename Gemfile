@@ -19,6 +19,11 @@ group :development, :test do
   gem 'capybara', '~> 2.15'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
+  gem 'capistrano',         require: false
+  gem 'capistrano-rvm',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano3-puma',   require: false
 end
 
 group :development do
