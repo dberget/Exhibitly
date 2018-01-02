@@ -11,7 +11,7 @@ class PresentationsController < ApplicationController
   # GET /presentations/1
   # GET /presentations/1.json
   def show
-    @account_tags = Sample.account_tags(current_user.account_id)
+    @tags = @presentation.samples.map {|s| s.tags}.flatten
   end
 
   # GET /presentations/new
@@ -46,7 +46,7 @@ class PresentationsController < ApplicationController
     respond_to do |format|
     samples = presentation_params[:presentation_samples_attributes][:sample_id]
 
-      if @presentation.update(name: presentation_params[:name]) && save_samples(samples) 
+      if @presentation.save && save_samples(samples) 
         format.html { redirect_to @presentation, notice: 'Presentation was successfully updated.' }
         format.json { render :show, status: :ok, location: @presentation }
       else
@@ -72,6 +72,16 @@ class PresentationsController < ApplicationController
     end
 
     def save_samples(samples)
+      curr_list = @presentation.presentation_samples.map {|s| s.sample_id.to_i}
+      sample_list = samples.map {|s| s.to_i}
+
+      to_remove = (curr_list - sample_list)
+
+      to_remove.each do |sample_id|
+        presentation_sample = @presentation.presentation_samples.find_by(sample_id: sample_id, presentation_id: @presentation.id)
+        presentation_sample.destroy
+       end 
+
       samples.each do |sample_id|
         presentation_sample = @presentation.presentation_samples.build(sample_id: sample_id, presentation_id: @presentation.id)
         presentation_sample.save

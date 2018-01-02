@@ -6,7 +6,7 @@ class PresentationLinkController < ApplicationController
     def show
      @presentation_link = PresentationLink.find_by(share_id: params[:share_id])
      @presentation = Presentation.find(@presentation_link.presentation_id)
-     @account_tags = Sample.account_tags(current_user.account_id)
+     @tags = @presentation.samples.map {|s| s.tags}.flatten
     end
 
     def create
@@ -14,7 +14,7 @@ class PresentationLinkController < ApplicationController
 
     respond_to do |format|
       if @presentation_link.save
-      format.html { redirect_to "/#{@presentation_link.share_id}", notice: 'url was successfully created.' }
+      format.html { redirect_to "/#{@presentation_link.share_id}"}
       else
         flash.now.alert = "Error creating link"
         redirect_to :presentations_link
