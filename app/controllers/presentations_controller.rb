@@ -83,7 +83,9 @@ class PresentationsController < ApplicationController
        end 
 
       samples.each do |sample_id|
-        presentation_sample = @presentation.presentation_samples.build(sample_id: sample_id, presentation_id: @presentation.id)
+        presentation_sample = @presentation.presentation_samples.find_or_create_by(sample_id: sample_id, presentation_id: @presentation.id)
+        presentation_sample.sort_id = samples.index(sample_id)
+
         presentation_sample.save
        end 
     end
