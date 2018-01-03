@@ -11,18 +11,17 @@
         "useBuiltIns": true
       }
     ],
-    "react",
-    "stage-0"
+    "react"
   ],
   "plugins": [
     "syntax-dynamic-import",
+    "transform-decorators-legacy",
     "transform-object-rest-spread",
     [
       "transform-class-properties",
       {
         "spec": true
-      },
-      "transform-decorators-legacy"
+      }
     ]
   ]
 }
