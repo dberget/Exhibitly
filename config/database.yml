@@ -51,5 +51,5 @@ production:
   <<: *default
   database: samples_production
   username: root
-  password: <%= ENV['SAMPLES_APP_DATABASE_PASSWORD'] %>
+  password: root 
   socket: /var/run/mysqld/mysqld.sock
