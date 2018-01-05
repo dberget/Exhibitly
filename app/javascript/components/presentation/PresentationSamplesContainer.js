@@ -15,14 +15,18 @@ const style = {
 }
 
 const listTarget = {
-    drop(props, monitor, component) {
-        const item = monitor.getItem();
+    drop() { },
 
-        props.addSample(item)
+    hover(props, monitor) {
+        const item = monitor.getItem()
+
+        if (props.canAddSample(item.id) && !undefined) {
+            props.addSample(item)
+        }
     }
 }
 
-@DropTarget(ItemTypes.NEW, listTarget, (connect, monitor) => ({
+@DropTarget(ItemTypes.CARD, listTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
 }))
 export default class PresentationSamplesContainer extends Component {
@@ -32,6 +36,8 @@ export default class PresentationSamplesContainer extends Component {
             handleRemove,
             listTarget,
             connectDropTarget,
+            findCard,
+            canAddSample,
             moveCard } = this.props
 
         return (
@@ -42,8 +48,11 @@ export default class PresentationSamplesContainer extends Component {
                         <Card
                             key={card.id}
                             index={i}
-                            type={ItemTypes.SORT}
+                            findCard={findCard}
+                            sort
+                            canAddSample={canAddSample}
                             id={card.id}
+                            canMove
                             title={card.title}
                             moveCard={moveCard}
                             handleRemove={handleRemove}

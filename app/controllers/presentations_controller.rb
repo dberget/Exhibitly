@@ -71,20 +71,21 @@ class PresentationsController < ApplicationController
       @presentation = Presentation.find(params[:id])
     end
 
-    def update_samples(samples)
-      curr_list = @presentation.presentation_samples.map {|s| s.sample_id.to_i}
-      sample_list = samples.map {|s| s.to_i}
+    # TODO: move to model 
+    def update_samples(new_samples)
+      old_samples = @presentation.presentation_samples.map {|s| s.sample_id.to_i}
+      to_remove = (old_samples - new_samples)
 
-      to_remove = (curr_list - sample_list)
+      if to_remove
+        to_remove.each do |sample_id|
+          presentation_sample = @presentation.presentation_samples.find_by(sample_id: sample_id, presentation_id: @presentation.id)
+          presentation_sample.destroy
+        end 
+      end
 
-      to_remove.each do |sample_id|
-        presentation_sample = @presentation.presentation_samples.find_by(sample_id: sample_id, presentation_id: @presentation.id)
-        presentation_sample.destroy
-       end 
-
-      samples.each do |sample_id|
+      new_samples.each do |sample_id|
         presentation_sample = @presentation.presentation_samples.find_or_create_by(sample_id: sample_id, presentation_id: @presentation.id)
-        presentation_sample.sort_id = samples.index(sample_id)
+        presentation_sample.sort_id = new_samples.index(sample_id)
 
         presentation_sample.save
        end 

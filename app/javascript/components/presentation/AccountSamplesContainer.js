@@ -12,7 +12,7 @@ const style = {
 
 export default class AccountSamplesContainer extends Component {
     render() {
-        const { accountSamples, addSample } = this.props
+        const { accountSamples, addSample, moveCard, canAddSample } = this.props
 
         return (
             <div style={style}>
@@ -21,9 +21,10 @@ export default class AccountSamplesContainer extends Component {
                     <Card
                         key={card.id}
                         addSample={addSample}
-                        canAdd
+                        canMove={canAddSample(card.id)}
                         type={ItemTypes.NEW}
                         index={i}
+                        moveCard={moveCard}
                         id={card.id}
                         title={card.title}
                     />

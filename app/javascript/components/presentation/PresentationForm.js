@@ -31,17 +31,32 @@ export default class PresentationForm extends Component {
         }
     }
 
-    moveCard = (dragIndex, hoverIndex) => {
+    canAddSample = (id) => {
         const { presentation } = this.state
-        const dragCard = presentation[dragIndex]
+        const index = presentation.map(x => x.id).indexOf(id)
 
+        return index === -1
+    }
+
+    moveCard = (id, atIndex) => {
+        const { sample, index } = this.findCard(id)
         this.setState(
             update(this.state, {
                 presentation: {
-                    $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
+                    $splice: [[index, 1], [atIndex, 0, sample]],
                 },
             }),
         )
+    }
+
+    findCard = (id) => {
+        const { presentation } = this.state
+        const sample = presentation.filter(c => c.id === id)[0]
+
+        return {
+            sample,
+            index: presentation.indexOf(sample),
+        }
     }
 
     handleRemove = (sample) => {
@@ -67,8 +82,18 @@ export default class PresentationForm extends Component {
         return (
             <span>
                 <div className="container-fluid row mt-5">
-                    <AccountSamplesContainer addSample={this.handleSampleAdd} accountSamples={this.props.accountSamples} />
-                    <PresentationSamplesContainer moveCard={this.moveCard} addSample={this.handleSampleAdd} handleRemove={this.handleRemove} presentationSamples={this.state.presentation} />
+                    <AccountSamplesContainer
+                        moveCard={this.moveCard}
+                        addSample={this.handleSampleAdd}
+                        canAddSample={this.canAddSample}
+                        accountSamples={this.props.accountSamples} />
+                    <PresentationSamplesContainer
+                        findCard={this.findCard}
+                        moveCard={this.moveCard}
+                        canAddSample={this.canAddSample}
+                        addSample={this.handleSampleAdd}
+                        handleRemove={this.handleRemove}
+                        presentationSamples={this.state.presentation} />
                     {this.state.presentation.map(tag =>
                         <input name="presentation[presentation_samples_attributes][sample_id][]" key={tag.id} type="hidden" value={tag.id} />
                     )}
