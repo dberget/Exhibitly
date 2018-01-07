@@ -17,24 +17,6 @@ export default class PresentationForm extends Component {
         }
     }
 
-    // Future auto-save feature
-    // componentDidUpdate(prevProps, prevState) {
-    //     const { samples } = this.state
-    //     const ids = samples.map(x => x.id)
-
-    //     if (samples !== prevState.samples) {
-    //         fetch(`http://localhost:3000/api/${this.props.presentation_id}.json`, {
-    //             method: "PATCH",
-    //             body: JSON.stringify({
-    //                 samples: ids
-    //             }),
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             }
-    //         }).then(this.setState({ saved: true }))
-    //     }
-    // }
-
     componentDidMount() {
         this.setState({ samples: this.props.presentationSamples, presentation: this.props.presentation })
     }
@@ -72,6 +54,7 @@ export default class PresentationForm extends Component {
         this.handleSave()
     }
 
+    // should probably have different for save or new. 
     handleSave = () => {
         const { samples } = this.state
         const { id } = this.props.presentation
