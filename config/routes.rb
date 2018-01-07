@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :accounts
   resources :samples
   resources :sessions
+  resources :api
 
   get 'static_pages/home'
   get 'static_pages/about'
