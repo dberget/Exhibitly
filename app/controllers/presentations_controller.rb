@@ -26,8 +26,8 @@ class PresentationsController < ApplicationController
   # POST /presentations
   # POST /presentations.json
   def create
-    @presentation = Presentation.new(name: presentation_params[:name], account_id: presentation_params[:account_id])
-    samples = presentation_params[:presentation_samples_attributes][:sample_id]
+    @presentation = Presentation.new(name: presentation_params[:name], account_id: current_user.account_id)
+    samples = presentation_params[:samples]
 
     respond_to do |format|
       if @presentation.save && update_samples(samples) 
@@ -43,9 +43,10 @@ class PresentationsController < ApplicationController
   # PATCH/PUT /presentations/1
   # PATCH/PUT /presentations/1.json
   def update
-    respond_to do |format|
-    samples = presentation_params[:presentation_samples_attributes][:sample_id]
+    samples = presentation_params[:samples]
+    @presentation.update(name: presentation_params[:name])
 
+    respond_to do |format|
       if @presentation.save && update_samples(samples) 
         format.html { redirect_to @presentation, notice: 'Presentation was successfully updated.' }
         format.json { render :show, status: :ok, location: @presentation }
@@ -96,6 +97,6 @@ class PresentationsController < ApplicationController
     end
 
     def presentation_params
-      params.require(:presentation).permit(:name, :account_id, :presentation_samples_attributes => {:sample_id => []})
+      params.require(:presentation).permit(:name, :account_id, :samples => [])
     end
 end

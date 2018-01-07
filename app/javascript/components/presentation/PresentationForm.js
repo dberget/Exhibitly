@@ -12,28 +12,47 @@ export default class PresentationForm extends Component {
         super(props)
 
         this.state = {
-            presentation: []
+            presentation: {},
+            samples: []
         }
     }
 
+    // Future auto-save feature
+    // componentDidUpdate(prevProps, prevState) {
+    //     const { samples } = this.state
+    //     const ids = samples.map(x => x.id)
+
+    //     if (samples !== prevState.samples) {
+    //         fetch(`http://localhost:3000/api/${this.props.presentation_id}.json`, {
+    //             method: "PATCH",
+    //             body: JSON.stringify({
+    //                 samples: ids
+    //             }),
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             }
+    //         }).then(this.setState({ saved: true }))
+    //     }
+    // }
+
     componentDidMount() {
-        this.setState({ presentation: this.props.presentationSamples })
+        this.setState({ samples: this.props.presentationSamples, presentation: this.props.presentation })
     }
 
     handleSampleAdd = (item) => {
-        const { presentation } = this.state
-        const index = presentation.map(x => x.id).indexOf(item.id)
+        const { samples } = this.state
+        const index = samples.map(x => x.id).indexOf(item.id)
 
         if (index === -1) {
             this.setState(prevState => ({
-                presentation: prevState.presentation.concat(item)
+                samples: prevState.samples.concat(item)
             }))
         }
     }
 
     canAddSample = (id) => {
-        const { presentation } = this.state
-        const index = presentation.map(x => x.id).indexOf(id)
+        const { samples } = this.state
+        const index = samples.map(x => x.id).indexOf(id)
 
         return index === -1
     }
@@ -42,30 +61,72 @@ export default class PresentationForm extends Component {
         const { sample, index } = this.findCard(id)
         this.setState(
             update(this.state, {
-                presentation: {
+                samples: {
                     $splice: [[index, 1], [atIndex, 0, sample]],
                 },
             }),
         )
     }
 
+    handleSaveClick = (e) => {
+        this.handleSave()
+    }
+
+    handleSave = () => {
+        const { samples } = this.state
+        const { id } = this.props.presentation
+        const method = id ? "PUT" : "POST"
+        const ids = samples.map(x => x.id)
+        const url = `/presentations${id ? "/" + id : ""}.json`
+        const body = JSON.stringify({ presentation: { samples: ids, name: this.state.presentation.name } })
+
+        fetch(url, {
+            method: method,
+            body: body,
+            credentials: 'same-origin',
+            headers: {
+                "X-Requested-With": 'XMLHttpRequest',
+                'X-CSRF-Token': this.props.authenticity_token,
+                "Content-Type": "application/json",
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    presentation: {
+                        ...this.state.presentation,
+                        id: json.id
+                    }
+                })
+            })
+    }
+
     findCard = (id) => {
-        const { presentation } = this.state
-        const sample = presentation.filter(c => c.id === id)[0]
+        const { samples } = this.state
+        const sample = samples.filter(c => c.id === id)[0]
 
         return {
             sample,
-            index: presentation.indexOf(sample),
+            index: samples.indexOf(sample),
         }
     }
 
+    handleNameChange = (e) => {
+        this.setState({
+            presentation: {
+                ...this.state.presentation,
+                name: e.target.value
+            }
+        })
+    }
+
     handleRemove = (sample) => {
-        const { presentation } = this.state
+        const { samples } = this.state
 
-        const index = presentation.map(x => x.id).indexOf(sample)
-        presentation.splice(index, 1)
+        const index = samples.map(x => x.id).indexOf(sample)
+        samples.splice(index, 1)
 
-        this.setState({ presentation: presentation })
+        this.setState({ samples: samples })
     }
 
     static propTypes = {
@@ -75,12 +136,17 @@ export default class PresentationForm extends Component {
 
     static defaultProps = {
         accountSamples: [],
+        presentation: {},
         presentationSamples: []
     }
 
     render() {
+        const { id, name } = this.state.presentation
         return (
             <span>
+                <input className="form-control w-25" onChange={this.handleNameChange} placeholder="presentation name" value={name ? name : ""} />
+                <a onClick={this.handleSaveClick} href={`/presentations/${id}`} className={`btn btn-primary float-right ${id ? "" : "disabled"}`}> View  </a>
+                <button onClick={this.handleSaveClick} type="button" className="btn btn-primary mb-2 mr-1 float-right"> Save </button>
                 <div className="container-fluid row mt-5">
                     <AccountSamplesContainer
                         moveCard={this.moveCard}
@@ -93,12 +159,9 @@ export default class PresentationForm extends Component {
                         canAddSample={this.canAddSample}
                         addSample={this.handleSampleAdd}
                         handleRemove={this.handleRemove}
-                        presentationSamples={this.state.presentation} />
-                    {this.state.presentation.map(tag =>
-                        <input name="presentation[presentation_samples_attributes][sample_id][]" key={tag.id} type="hidden" value={tag.id} />
-                    )}
+                        presentationSamples={this.state.samples} />
                 </div>
-            </span>
+            </span >
         )
     }
 }
