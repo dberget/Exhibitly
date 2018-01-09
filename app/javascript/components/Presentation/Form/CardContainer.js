@@ -3,13 +3,12 @@ import PropTypes from 'prop-types'
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
 import ItemTypes from './ItemTypes'
+import FormCard from './FormCard'
 
 const style = {
-    border: '1px dashed gray',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
+    marginBottom: '.3rem',
     cursor: 'move',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
 }
 
 const sortTarget = {
@@ -64,7 +63,7 @@ const cardSource = {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
 }))
-export default class Card extends Component {
+export default class CardContainer extends Component {
     static propTypes = {
         connectDragSource: PropTypes.func.isRequired,
         connectDropTarget: PropTypes.func.isRequired,
@@ -82,9 +81,9 @@ export default class Card extends Component {
         this.props.handleRemove(id)
     }
 
+
     render() {
         const {
-            title,
             id,
             index,
             isDragging,
@@ -92,7 +91,9 @@ export default class Card extends Component {
             dropType,
             draggedType,
             canMove,
+            format,
             sort,
+            data,
             connectDragSource,
             connectDropTarget
         } = this.props
@@ -101,7 +102,16 @@ export default class Card extends Component {
         const opacity = isDragging ? 0 : 1
 
         return connectDragSource(
-            connectDropTarget(<div onDoubleClick={sort ? this.handleclick.bind(this, id) : this.handleCardAdd.bind(this, { title, id })} style={{ ...style, color, opacity }}> {title} </div>)
+            connectDropTarget(
+                <div>
+                    <FormCard
+                        handleDoubleClick={sort ? this.handleclick.bind(this, id) : this.handleCardAdd.bind(this, { id, index })}
+                        style={{ ...style, color, opacity }}
+                        format={format}
+                        card={data}
+                    />
+                </div>
+            )
         )
     }
 }

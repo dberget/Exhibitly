@@ -59,7 +59,7 @@ class Samples extends React.Component {
 
     return (
       <div className="container-fluid bg-light" >
-        <FilterNav handleClick={this.handleClick} filters={this.state.filters} samples={samples} account_tags={account_tags} />
+        <FilterNav handleClick={this.handleClick} filters={this.state.filters} samples={samples} accountTags={account_tags} />
         <div className="container-fluid pb-5">
           {this.list()}
         </div>

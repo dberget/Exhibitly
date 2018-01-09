@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import update from 'immutability-helper'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+
+import FormNav from './TopNav'
 import AccountSamplesContainer from './AccountSamplesContainer'
 import PresentationSamplesContainer from './PresentationSamplesContainer'
 
@@ -13,22 +15,29 @@ export default class PresentationForm extends Component {
 
         this.state = {
             presentation: {},
-            samples: []
+            samples: [],
+            expanded: true
         }
     }
 
     componentDidMount() {
-        this.setState({ samples: this.props.presentationSamples, presentation: this.props.presentation })
+        this.setState({
+            samples: this.props.presentationSamples,
+            presentation: this.props.presentation,
+        })
     }
 
     handleSampleAdd = (item) => {
+        const { accountSamples } = this.props
         const { samples } = this.state
         const index = samples.map(x => x.id).indexOf(item.id)
+        const newItem = item.originalIndex > -1 ? accountSamples[item.originalIndex] : accountSamples[item.index]
 
         if (index === -1) {
             this.setState(prevState => ({
-                samples: prevState.samples.concat(item)
-            }))
+                samples: prevState.samples.concat(newItem)
+            })
+            )
         }
     }
 
@@ -103,6 +112,10 @@ export default class PresentationForm extends Component {
         })
     }
 
+    handleCardFormat = () => {
+        this.setState({ expanded: !this.state.expanded })
+    }
+
     handleRemove = (sample) => {
         const { samples } = this.state
 
@@ -126,25 +139,27 @@ export default class PresentationForm extends Component {
     render() {
         const { id, name } = this.state.presentation
         return (
-            <span>
-                <input className="form-control w-25" onChange={this.handleNameChange} placeholder="presentation name" value={name ? name : ""} />
-                <a onClick={this.handleSaveClick} href={`/presentations/${id}`} className={`btn btn-primary float-right ${id ? "" : "disabled"}`}> View  </a>
-                <button onClick={this.handleSaveClick} type="button" className="btn btn-primary mb-2 mr-1 float-right"> Save </button>
-                <div className="container-fluid row mt-5">
-                    <AccountSamplesContainer
-                        moveCard={this.moveCard}
-                        addSample={this.handleSampleAdd}
-                        canAddSample={this.canAddSample}
-                        accountSamples={this.props.accountSamples} />
-                    <PresentationSamplesContainer
-                        findCard={this.findCard}
-                        moveCard={this.moveCard}
-                        canAddSample={this.canAddSample}
-                        addSample={this.handleSampleAdd}
-                        handleRemove={this.handleRemove}
-                        presentationSamples={this.state.samples} />
+            <div className="mt-5">
+                <div className="container-fluid">
+                    <FormNav handleSaveClick={this.handleSaveClick} cardFormat={this.state.expanded} handleCardFormat={this.handleCardFormat} handleNameChange={this.handleNameChange} id={id} presentationName={name} />
+                    <div className="row">
+                        <AccountSamplesContainer
+                            moveCard={this.moveCard}
+                            cardFormat={this.state.expanded}
+                            addSample={this.handleSampleAdd}
+                            canAddSample={this.canAddSample}
+                            accountSamples={this.props.accountSamples} />
+                        <PresentationSamplesContainer
+                            findCard={this.findCard}
+                            cardFormat={this.state.expanded}
+                            moveCard={this.moveCard}
+                            canAddSample={this.canAddSample}
+                            addSample={this.handleSampleAdd}
+                            handleRemove={this.handleRemove}
+                            presentationSamples={this.state.samples} />
+                    </div>
                 </div>
-            </span >
+            </div >
         )
     }
 }

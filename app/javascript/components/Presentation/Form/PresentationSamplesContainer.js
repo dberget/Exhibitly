@@ -3,14 +3,13 @@ import { DropTarget } from 'react-dnd'
 import { findDOMNode } from 'react-dom'
 import update from 'immutability-helper'
 import ItemTypes from './ItemTypes'
-import Card from './Card'
+import CardContainer from './CardContainer'
 
 const style = {
-    width: 400,
-    minHeight: 600,
-    border: 'solid',
+    width: 500,
+    minHeight: 400,
+    marginRight: 60,
     padding: 10,
-    marginRight: 80,
     marginLeft: 'auto'
 }
 
@@ -38,17 +37,20 @@ export default class PresentationSamplesContainer extends Component {
             connectDropTarget,
             findCard,
             canAddSample,
+            cardFormat,
             moveCard } = this.props
 
         return (
             connectDropTarget(
-                <div style={style}>
-                    <h3> Presentation Samples </h3>
+                <div className="border" style={style}>
+                    <h4> Presentation Samples </h4>
                     {presentationSamples.map((card, i) => (
-                        <Card
+                        <CardContainer
                             key={card.id}
+                            data={card}
                             index={i}
                             findCard={findCard}
+                            format={cardFormat}
                             sort
                             canAddSample={canAddSample}
                             id={card.id}
