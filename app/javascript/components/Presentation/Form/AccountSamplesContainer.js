@@ -6,6 +6,7 @@ import CardContainer from './CardContainer'
 
 const style = {
     minHeight: 600,
+    boxShadow: "0px 3px 15px rgba(0, 0, 0, 0.2)"
 }
 
 export default class AccountSamplesContainer extends Component {
