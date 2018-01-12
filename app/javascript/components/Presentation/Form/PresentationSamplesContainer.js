@@ -6,11 +6,7 @@ import ItemTypes from './ItemTypes'
 import CardContainer from './CardContainer'
 
 const style = {
-    width: 500,
-    minHeight: 400,
-    marginRight: 60,
-    padding: 10,
-    marginLeft: 'auto'
+    minHeight: 600,
 }
 
 const listTarget = {
@@ -29,6 +25,12 @@ const listTarget = {
     connectDropTarget: connect.dropTarget(),
 }))
 export default class PresentationSamplesContainer extends Component {
+    constructor() {
+        super()
+
+        this.state = { cardFormat: false }
+    }
+
     render() {
         const {
             presentationSamples,
@@ -42,15 +44,18 @@ export default class PresentationSamplesContainer extends Component {
 
         return (
             connectDropTarget(
-                <div className="border" style={style}>
-                    <h4> Presentation Samples </h4>
+                <div className="col-4 offset-2 top-border-green bg-white bottom-border" style={style}>
+                    <div className="row mb-1 p-3">
+                        <h4> Presentation Samples </h4>
+                        <button onClick={() => this.setState({ cardFormat: !this.state.cardFormat })} className="btn btn-sm btn-light ml-auto"> Card View </button>
+                    </div>
                     {presentationSamples.map((card, i) => (
                         <CardContainer
                             key={card.id}
                             data={card}
                             index={i}
                             findCard={findCard}
-                            format={cardFormat}
+                            format={this.state.cardFormat}
                             sort
                             canAddSample={canAddSample}
                             id={card.id}

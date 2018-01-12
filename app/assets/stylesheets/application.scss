@@ -14,3 +14,39 @@
 
  @import "bootstrap";
  @import "modal";
+
+.top-border-green {
+    border-top: 6px solid #28a745;
+    border-top-left-radius: .4rem;
+    border-top-right-radius: .4rem;
+} 
+
+.bottom-border {
+    border-bottom-left-radius: .4rem;
+    border-bottom-right-radius: .4rem;
+}
+
+.main-bg {
+    background: #fafafa; 
+}
+
+.navbar {
+    text-decoration: none !important;
+    text-decoration-color: #bbb;
+
+    h1 {
+        font-size: 2em;
+        font-weight: 350;
+    }
+}
+
+.nav-email  {
+    padding: .5rem 1rem;
+    margin-bottom: 0;
+    color: white;
+}
+
+
+.navbar-background {
+    box-shadow: 0 1px 0 #4d4d4d inset,0 2px 3px rgba(0,0,0,0.25) !important
+}

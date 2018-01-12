@@ -1,29 +1,4 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Presentations</h1>
+<%= react_component("Presentation/Index/PresentationIndex", {presentations: @presentations}) %> 
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @presentations.each do |presentation| %>
-      <tr>
-        <td><%= presentation.name %></td>
-        <td><%= link_to 'Show', presentation %></td>
-        <td><%= link_to 'Edit', edit_presentation_path(presentation) %></td>
-        <td><%= link_to 'Share', "/share/#{presentation.id}" %></td>
-        <td><%= link_to 'Destroy', presentation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= react_component("Presentation/PresentationIndex", {presentations: @presentations}) %> 
-
-
-<%= link_to 'New Presentation', new_presentation_path %>

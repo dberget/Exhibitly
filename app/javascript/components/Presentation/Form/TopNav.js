@@ -1,22 +1,23 @@
 import React from 'react';
 
 const style = {
-    marginBottom: 5
+    padding: '2.5rem',
+    borderBottom: "solid lightgrey 1px",
 }
 
-const FormNav = ({ handleNameChange, handleCardFormat, presentationName, handleSaveClick, id, cardFormat }) => {
+const FormNav = ({ handleNameChange, presentationName, newName, handleSaveClick, id, cardFormat }) => {
     return (
-        <nav style={style} className="navbar navbar-light bg-light">
-            <a className="navbar-brand"> {id ? "Editing" : "Creating"} Presentation </a>
-            <button onClick={handleCardFormat} className="navbar-toggler" type="button"> {cardFormat ? "Condensed" : "Expand"} </button>
-            {/* <form className="form-inline"> */}
-            {/* <input className="form-control mr-sm-2" onChange={handleNameChange} value={presentationName ? presentationName : ""} /> */}
-            {/* </form> */}
-            <a className="btn btn-warning mr-2 ml-auto" href={`/presentations`} > Back  </a>
-            <a className={`btn btn-outline-primary ${id ? "" : "disabled"} mr-2`} onClick={handleSaveClick} href={`/presentations/${id}`} > View  </a>
-            <button className="btn btn-outline-success" type="button" onClick={handleSaveClick}> Save </button>
-        </nav >
+        <div style={style} className="navbar navbar-light">
+            <h1> {id ? "Editing" : "Creating"} {presentationName ? presentationName : "Presentation"} </h1>
+            <form className="form-inline ml-auto">
+                <input className="form-control mr-sm-2" onChange={handleNameChange} value={newName} />
+            </form>
+            <a className="btn btn-outline-warning mr-1" href={`/presentations`} > Back  </a>
+            <a className={`btn btn-primary mr-1 ${id ? "" : "disabled"}`} onClick={handleSaveClick} href={`/presentations/${id}`} > View  </a>
+            <button className="btn btn-success" type="button" onClick={handleSaveClick}> Save </button>
+        </div>
     );
 };
+
 
 export default FormNav;

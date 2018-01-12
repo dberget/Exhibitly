@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import update from 'immutability-helper'
 import { DragDropContext } from 'react-dnd'
@@ -16,7 +16,6 @@ export default class PresentationForm extends Component {
         this.state = {
             presentation: {},
             samples: [],
-            expanded: true
         }
     }
 
@@ -137,11 +136,12 @@ export default class PresentationForm extends Component {
     }
 
     render() {
-        const { id, name } = this.state.presentation
+        const { id } = this.state.presentation
+        const { name } = this.props.presentation
         return (
-            <div className="mt-5">
-                <div className="container-fluid">
-                    <FormNav handleSaveClick={this.handleSaveClick} cardFormat={this.state.expanded} handleCardFormat={this.handleCardFormat} handleNameChange={this.handleNameChange} id={id} presentationName={name} />
+            <Fragment>
+                <FormNav handleSaveClick={this.handleSaveClick} cardFormat={this.state.expanded} handleCardFormat={this.handleCardFormat} handleNameChange={this.handleNameChange} id={id} newName={this.state.name} presentationName={name} />
+                <div className="container-fluid main-bg py-5">
                     <div className="row">
                         <AccountSamplesContainer
                             moveCard={this.moveCard}
@@ -159,7 +159,7 @@ export default class PresentationForm extends Component {
                             presentationSamples={this.state.samples} />
                     </div>
                 </div>
-            </div >
+            </Fragment>
         )
     }
 }

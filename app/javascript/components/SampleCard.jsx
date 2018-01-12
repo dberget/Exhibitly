@@ -25,12 +25,13 @@ class SampleCard extends Component {
                     <p className="card-text">{body}</p>
                 </div>
                 <div className="card-footer">
-                    <button type="button" onClick={this.handleModal} className="btn btn-primary mr-1">Launch</button>
-                    <a data-turbolinks="false" href={`samples/${id}`} className="btn btn-secondary"> Show </a>
-                    <span className="ml-5"></span>
-                    {tags.map((tag) =>
-                        <span className="border mx-2 p-1"> {tag} </span>
-                    )}
+                    <div className="row">
+                        <button type="button" onClick={this.handleModal} className="btn btn-primary mr-1">Launch</button>
+                        <a data-turbolinks="false" href={`samples/${id}`} className="btn btn-secondary mr-auto"> Show </a>
+                        {tags.map((tag) =>
+                            <span className="border mx-2 p-1"> {tag} </span>
+                        )}
+                    </div>
                 </div>
                 {
                     this.state.modalVisible ?
