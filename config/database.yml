@@ -50,6 +50,7 @@ test:
 production:
   <<: *default
   database: samples_production
+  adapter: mysql2
   username: root
   password: root 
   socket: /var/run/mysqld/mysqld.sock
