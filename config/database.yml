@@ -50,6 +50,7 @@ test:
 production:
   <<: *default
   database: samples_production
+  url: ENV['DATABASE_URL'] 
   adapter: mysql2
   username: root
   password: root 
