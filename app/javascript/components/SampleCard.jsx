@@ -3,8 +3,8 @@ import Modal from './Modal'
 import ModalWrapper from './ModalWrapper'
 
 class SampleCard extends Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
 
         this.state = {
             modalVisible: false
@@ -19,7 +19,7 @@ class SampleCard extends Component {
     render() {
         const { title, body, url, id, tags } = this.props
         return (
-            <div className="card" style={{ height: "15rem", width: "30rem", margin: "1rem auto" }}>
+            <div className="card" style={{ height: "15rem", width: "20rem", margin: "1rem auto" }}>
                 <div className="card-body">
                     <h4 className="card-title">{title}</h4>
                     <p className="card-text">{body}</p>

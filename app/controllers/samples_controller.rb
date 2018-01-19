@@ -69,16 +69,11 @@ class SamplesController < ApplicationController
       @sample = Sample.find(params[:id])
     end
 
-    # def set_user
-    #   @user = current_user
-    # end
-    
     def require_user
       redirect_to root_url unless current_user
       @user = current_user
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def sample_params
       params.require(:sample).permit(:title, :body, :url, :account_id, :tags => [])
     end

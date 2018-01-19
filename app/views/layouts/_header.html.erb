@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <nav class="navbar navbar-expand-lg navbar-expand-md navbar-dark bg-dark navbar-background">
     <% if logged_in?  %>
-      <a class="navbar-brand p-2">
+      <a class="navbar-brand">
         <%= link_to current_user.account.name, presentations_path %> 
       </a>
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item pr-1">
-       <p class="nav-email"> <%= current_user.email %> </p>
+      <li class="nav-item">
+        <p class="nav-email"> <%= current_user.email %> </p>
       </li>
-      <li class="nav-item mr-1 pr-1">
+      <li class="nav-item">
         <%= link_to "settings", edit_account_path(current_user.account_id), class: "nav-link" %>
       </li>
-      <li class="nav-item pr-1">
+      <li class="nav-item">
         <%= link_to "log out", logout_path, class: "nav-link"  %>
       </li>
    </ul>

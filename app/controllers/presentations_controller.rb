@@ -1,6 +1,7 @@
 class PresentationsController < ApplicationController
   before_action :set_presentation, only: [:show, :edit, :update, :destroy]
   before_action :set_samples, only: [:new, :edit]
+  before_action :require_user
 
   # GET /presentations
   # GET /presentations.json
@@ -90,6 +91,11 @@ class PresentationsController < ApplicationController
 
         presentation_sample.save
        end 
+    end
+
+    def require_user
+      redirect_to root_url unless current_user
+      @user = current_user
     end
 
     def set_samples

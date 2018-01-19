@@ -8,7 +8,7 @@ class Samples extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { entries: [], filters: [] }
+    this.state = { entries: [], filters: [], columns: 4 }
 
     this.handleClick = this.handleClick.bind(this)
   }
@@ -37,7 +37,7 @@ class Samples extends React.Component {
 
 
   list = () => {
-    const { filters } = this.state
+    const { filters, columns } = this.state
 
     let filteredSamples =
       filters.length
@@ -49,7 +49,10 @@ class Samples extends React.Component {
 
     return (
       filteredSamples.map((sample) =>
-        <SampleCard {...sample} key={sample.id} />
+
+        <div className={`col-${12 / columns} mx-auto`}>
+          <SampleCard {...sample} key={sample.id} />
+        </div>
       )
     )
   }
@@ -58,10 +61,12 @@ class Samples extends React.Component {
     const { samples, account_tags } = this.props
 
     return (
-      <div className="container-fluid bg-light" >
+      <div className="container-fluid bg-light">
         <FilterNav handleClick={this.handleClick} filters={this.state.filters} samples={samples} accountTags={account_tags} />
         <div className="container-fluid pb-5">
-          {this.list()}
+          <div className="row">
+            {this.list()}
+          </div>
         </div>
       </div >
     );

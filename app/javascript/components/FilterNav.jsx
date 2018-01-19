@@ -22,7 +22,6 @@ class FilterNav extends Component {
                         <a className={`nav-link ${this.props.filters.includes(tag) ? "active" : ""}`} onClick={this.props.handleClick.bind(this, tag)}> {tag} </a>
                     </li>
                 )}
-                <li className="mr-auto"></li>
             </ul >
         );
     }

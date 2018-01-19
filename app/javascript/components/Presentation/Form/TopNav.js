@@ -19,5 +19,5 @@ const FormNav = ({ handleNameChange, presentationName, newName, handleSaveClick,
     );
 };
 
-
 export default FormNav;
+

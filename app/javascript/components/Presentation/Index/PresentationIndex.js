@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import IndexCard from './IndexCard'
+import withTheme from '../../WithTheme'
 
 const cardStyle = {
     width: "15rem",
@@ -9,7 +10,7 @@ const cardStyle = {
 }
 
 
-const PresentationIndex = ({ presentations }) => {
+const PresentationIndex = ({ presentations, theme }) => {
     return (
         <div className="container mt-5">
             <div className="row">
@@ -25,11 +26,13 @@ const PresentationIndex = ({ presentations }) => {
                     </a>
                 </div>
                 {presentations.map((presentation) =>
-                    <IndexCard presentation={presentation} cardStyle={cardStyle} />
+                    <IndexCard presentation={presentation} cardStyle={cardStyle} theme={theme} />
                 )}
             </div>
         </div>
     );
 }
 
-export default PresentationIndex;
+const themedPresentationIndex = withTheme(null)(PresentationIndex)
+
+export default themedPresentationIndex;

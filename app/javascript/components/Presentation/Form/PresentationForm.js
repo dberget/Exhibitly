@@ -65,7 +65,7 @@ export default class PresentationForm extends Component {
     // should probably have different for save or new. 
     handleSave = () => {
         const { samples } = this.state
-        const { id } = this.props.presentation
+        const { id } = this.state.presentation
         const method = id ? "PUT" : "POST"
         const ids = samples.map(x => x.id)
         const url = `/presentations${id ? "/" + id : ""}.json`

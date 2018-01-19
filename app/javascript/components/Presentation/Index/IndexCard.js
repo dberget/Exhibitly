@@ -21,12 +21,12 @@ class IndexCard extends React.Component {
     }
 
     render() {
-        const { presentation, cardStyle } = this.props
+        const { presentation, cardStyle, theme } = this.props
         const display = this.state.show ? "block" : "none"
 
         return (
             <div className="col-3">
-                <div className="card mt-1" style={cardStyle}>
+                <div className="card mt-1" style={{ ...cardStyle }}>
                     <div className="row">
                         <h5 className="ml-3 mr-auto"> {presentation.name} </h5>
                         <button onClick={() => this.toggleDropdown()} className="btn dropdown-toggle mt-0 mr-2 px-2 py-0" />
@@ -42,7 +42,7 @@ class IndexCard extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 };
