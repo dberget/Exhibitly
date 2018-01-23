@@ -12,7 +12,7 @@ class UserTheme extends Component {
     }
 
     componentDidMount() {
-        this.setState({ theme: { secondary: "#eee" } })
+        this.setState({ theme: { primary: "#000", secondary: "#eee" } })
     }
 
     render() {

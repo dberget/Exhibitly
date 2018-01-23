@@ -7,7 +7,6 @@ class PresentationsController < ApplicationController
   # GET /presentations.json
   def index
     @presentations = Presentation.by_account(@user.account_id)
-    # @presentations = current_user.account.presentations.all
   end
 
   # GET /presentations/1

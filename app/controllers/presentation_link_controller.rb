@@ -2,8 +2,7 @@ class PresentationLinkController < ApplicationController
   before_action :require_user, only: [:index]
 
     def index
-      # @links = PresentationLink.all_account_links(current_user.account_id)
-      @links = PresentationLink.joins(:presentation).merge(Presentation.by_account(current_user.account_id))
+      @links = PresentationLink.all_account_links(@user.account_id)
     end
 
     def new
