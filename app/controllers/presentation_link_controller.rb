@@ -1,6 +1,14 @@
 class PresentationLinkController < ApplicationController
+  before_action :require_user, only: [:index]
+
+    def index
+      # @links = PresentationLink.all_account_links(current_user.account_id)
+      @links = PresentationLink.joins(:presentation).merge(Presentation.by_account(current_user.account_id))
+    end
+
     def new
     end
+
 
     def show
      @presentation_link = PresentationLink.find_by(share_id: params[:share_id])
@@ -31,6 +39,11 @@ class PresentationLinkController < ApplicationController
     end
 
     private
+
+    def require_user
+      redirect_to root_url unless current_user
+      @user = current_user
+    end
 
     def presentation_link_params
       params.permit(:presentation_id)

@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <nav class="navbar navbar-expand-lg navbar-expand-md navbar-dark bg-dark navbar-background">
     <% if logged_in?  %>
-      <a class="navbar-brand">
-        <%= link_to current_user.account.name, presentations_path %> 
-      </a>
+      <li class="navbar-brand">
+        <%= link_to current_user.account.name, presentations_path, class: "nav-link text-white" %> 
+      </li>
+     <ul class="navbar-nav ml-2">
+      <li class="nav-item">
+        <%= link_to "Presentations", presentations_path, class: "nav-link text-light-grey"  %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Samples", samples_path, class: "nav-link text-light-grey" %>
+      </li>
+   </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <p class="nav-email"> <%= current_user.email %> </p>
@@ -21,7 +29,7 @@
       </div>
       <ul class="navbar-nav ml-auto">
       <li class="nav-item pr-1">
-        <%= link_to "Sign Up", register_path %> or
+        <%= link_to "Sign Up", register_path %> <span class="text-white"> or </span>
       </li>
       <li class="nav-item pr-1">
         <%= link_to "Log In", login_path %>

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'share/:presentation_id', to: 'presentation_link#create'
+  get 'links', to: 'presentation_link#index'
 
   get ':share_id', to: 'presentation_link#show'
 

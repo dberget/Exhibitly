@@ -26,7 +26,7 @@ class IndexCard extends React.Component {
 
         return (
             <div className="col-3">
-                <div className="card mt-1" style={{ ...cardStyle }}>
+                <div className="card mt-1" style={{ ...cardStyle, color: theme.primary }}>
                     <div className="row">
                         <h5 className="ml-3 mr-auto"> {presentation.name} </h5>
                         <button onClick={() => this.toggleDropdown()} className="btn dropdown-toggle mt-0 mr-2 px-2 py-0" />

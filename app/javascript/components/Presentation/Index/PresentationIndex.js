@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IndexCard from './IndexCard'
-import withTheme from '../../WithTheme'
+import UserTheme from '../../UserTheme'
 
 const cardStyle = {
     width: "15rem",
@@ -10,29 +10,31 @@ const cardStyle = {
 }
 
 
-const PresentationIndex = ({ presentations, theme }) => {
+const PresentationIndex = ({ presentations }) => {
     return (
-        <div className="container mt-5">
-            <div className="row">
-                <div className="col-3">
-                    <a href="presentations/new">
-                        <div className="card align-items-center" style={cardStyle}>
-                            <div className="row">
-                                <div className="col align-items-center">
-                                    <p> Create New Template </p>
+        <UserTheme render={({ theme }) => (
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-3">
+                        <a href="presentations/new">
+                            <div className="card align-items-center" style={{ ...cardStyle, color: theme.primary }}>
+                                <div className="row">
+                                    <div className="col align-items-center">
+                                        <p> Create New Template </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                    {presentations.map((presentation) =>
+                        <IndexCard presentation={presentation} cardStyle={cardStyle} theme={theme} />
+                    )}
                 </div>
-                {presentations.map((presentation) =>
-                    <IndexCard presentation={presentation} cardStyle={cardStyle} theme={theme} />
-                )}
-            </div>
-        </div>
+            </div >
+        )
+        } />
     );
 }
 
-const themedPresentationIndex = withTheme(null)(PresentationIndex)
 
-export default themedPresentationIndex;
+export default PresentationIndex;
