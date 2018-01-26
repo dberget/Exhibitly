@@ -1,0 +1,27 @@
+<%= form_for @presentation_link do |f| %>
+  <% if @presentation_link.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% @presentation_link.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :company %><br />
+    <%= f.text_field :company %>
+  </div>
+  <div class="field">
+    <%= f.label :expiration_date %><br />
+    <%= f.date_field :expiration_date %>
+  </div>
+
+  <%= f.hidden_field :presentation_id, value: params["presentation_id"] %>
+
+  <div class="actions"><%= f.submit "Save", class: "btn btn-primary mt-2" %></div>
+<% end %>
+
+

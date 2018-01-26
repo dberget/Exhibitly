@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<% @links.map do |l| %>
+<ul>
+    <div> 
+       <span> Company: </span> 
+     <%= l.company %>
+    </div>
+       <div> 
+            <span> Expiration Date: </span> 
+            <span> <%= l.expiration_date %> </span>
+       </div>
+        <span> <%= link_to "View", "/#{l.company}/#{l.share_id}"%> </span>
+</ul>
+<% end %>

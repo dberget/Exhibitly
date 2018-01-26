@@ -36,7 +36,7 @@ class IndexCard extends React.Component {
                     </div>
                     <div className="row justify-content-center mt-auto">
                         <div className="btn-group-sm">
-                            <a href={`/share/${presentation.id}`} className="btn btn-primary px-3"> Start </a>
+                            <a href={`/presentation_links/new/${presentation.id}`} className="btn btn-primary px-3"> Start </a>
                             <a href={`/presentations/${presentation.id}`} className="btn btn-outline-secondary mx-1">Preview</a>
                             <a href={`presentations/${presentation.id}/edit`} className="btn btn-outline-secondary mr-1"> Edit </a>
                         </div>
