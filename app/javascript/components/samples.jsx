@@ -1,8 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import SampleCard from './SampleCard'
-import FilterNav from './FilterNav'
+import React from "react"
+import ReactDOM from "react-dom"
+import PropTypes from "prop-types"
+import SampleCard from "./SampleCard"
+import FilterNav from "./FilterNav"
 
 class Samples extends React.Component {
   constructor(props) {
@@ -16,7 +16,6 @@ class Samples extends React.Component {
   componentWillMount() {
     this.setState({ entries: this.props.samples })
   }
-
 
   handleClick(newFilter) {
     const { filters } = this.state
@@ -35,26 +34,20 @@ class Samples extends React.Component {
     })
   }
 
-
   list = () => {
     const { filters, columns } = this.state
 
-    let filteredSamples =
-      filters.length
-        ? this.state.entries.filter((sample) => {
+    let filteredSamples = filters.length
+      ? this.state.entries.filter(sample => {
           return sample.tags.some(s => this.state.filters.indexOf(s) > -1)
         })
-        : this.props.samples
+      : this.props.samples
 
-
-    return (
-      filteredSamples.map((sample) =>
-
-        <div className={`col-${12 / columns} mx-auto`}>
-          <SampleCard {...sample} key={sample.id} />
-        </div>
-      )
-    )
+    return filteredSamples.map(sample => (
+      <div className={`col-${12 / columns} mx-auto`}>
+        <SampleCard {...sample} key={sample.id} />
+      </div>
+    ))
   }
 
   render() {
@@ -62,14 +55,17 @@ class Samples extends React.Component {
 
     return (
       <div className="container-fluid bg-light">
-        <FilterNav handleClick={this.handleClick} filters={this.state.filters} samples={samples} accountTags={account_tags} />
+        <FilterNav
+          handleClick={this.handleClick}
+          filters={this.state.filters}
+          samples={samples}
+          accountTags={account_tags}
+        />
         <div className="container-fluid pb-5">
-          <div className="row">
-            {this.list()}
-          </div>
+          <div className="row">{this.list()}</div>
         </div>
-      </div >
-    );
+      </div>
+    )
   }
 }
 

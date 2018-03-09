@@ -72,17 +72,17 @@ class AccountsController < ApplicationController
           end
         end
       
-        private
-          def set_account
-            @account = Account.find(params[:id])
-          end
+    private
+      def set_account
+        @account = Account.find(params[:id])
+      end
 
-          def require_user
-            redirect_to root_url unless current_user
-            @user = current_user
-          end
-      
-          def account_params
-            params.require(:account).permit(:name, users_attributes: {})
-          end
+      def require_user
+        redirect_to root_url unless current_user
+        @user = current_user
+      end
+  
+      def account_params
+        params.require(:account).permit(:name, users_attributes: {})
+      end
 end

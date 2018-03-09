@@ -4,12 +4,12 @@
 <ul>
     <div> 
        <span> Company: </span> 
-     <%= l.company %>
+        <%= l.company %>
     </div>
-       <div> 
-            <span> Expiration Date: </span> 
-            <span> <%= l.expiration_date %> </span>
-       </div>
-        <span> <%= link_to "View", "/#{l.company}/#{l.share_id}"%> </span>
+    <div> 
+        <span> Expiration Date: </span> 
+        <span> <%= l.expiration_date %> </span>
+    </div>
+       <%= link_to "View", "/#{l.company}/#{l.share_id}"%>
 </ul>
 <% end %>
