@@ -1,5 +1,5 @@
 export default {
-    CARD: 'card',
-    NEW: 'new',
-    SORT: 'sort'
+  CARD: "card",
+  NEW: "new",
+  SORT: "sort"
 }
